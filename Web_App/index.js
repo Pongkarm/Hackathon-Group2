@@ -442,6 +442,8 @@ function initTerminalSimulation() {
     const consoleEl = document.getElementById('terminal-console');
     if (!consoleEl) return;
 
+    const terminalBody = consoleEl.parentElement; // The scrollable container
+
     // Set initial prompt placeholder
     consoleEl.innerHTML = '<span class="terminal-prompt">hacker@nexus-forensics:~$ </span><span class="cursor"></span>';
 
@@ -460,7 +462,7 @@ function initTerminalSimulation() {
                     const line = document.createElement('div');
                     line.innerHTML = html;
                     consoleEl.appendChild(line);
-                    consoleEl.scrollTop = consoleEl.scrollHeight;
+                    terminalBody.scrollTop = terminalBody.scrollHeight; // Scroll parent container
                     resolve();
                 }, delay);
             });
@@ -479,7 +481,7 @@ function initTerminalSimulation() {
                 const interval = setInterval(() => {
                     cmdEl.textContent += cmdText[idx];
                     idx++;
-                    consoleEl.scrollTop = consoleEl.scrollHeight;
+                    terminalBody.scrollTop = terminalBody.scrollHeight; // Scroll parent container
                     if (idx >= cmdText.length) {
                         clearInterval(interval);
                         cursorEl.remove(); // Remove blinking cursor from command line
@@ -524,7 +526,7 @@ function initTerminalSimulation() {
         const finalPrompt = document.createElement('div');
         finalPrompt.innerHTML = '<span class="terminal-prompt">hacker@nexus-forensics:~$ </span><span class="cursor"></span>';
         consoleEl.appendChild(finalPrompt);
-        consoleEl.scrollTop = consoleEl.scrollHeight;
+        terminalBody.scrollTop = terminalBody.scrollHeight; // Scroll parent container
     };
 
     // Trigger terminal animation when visible
