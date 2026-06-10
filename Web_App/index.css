@@ -441,4 +441,25 @@ body {
     height: 520px;
 }
 
+/* Timeline Custom Styles */
+.glow-yellow-red {
+    background: linear-gradient(90deg, var(--accent-yellow), var(--accent-red));
+}
+
+.chart-header.border-yellow {
+    border-left-color: var(--accent-yellow);
+}
+
+.chart-icon-accent-yellow {
+    color: var(--accent-yellow);
+    font-size: 1.1rem;
+    text-shadow: 0 0 10px var(--accent-yellow-glow);
+}
+
+.chart-card:has(.glow-yellow-red):hover {
+    border-color: rgba(255, 204, 0, 0.25);
+    box-shadow: 0 10px 30px rgba(255, 204, 0, 0.05);
+}
+
+
 

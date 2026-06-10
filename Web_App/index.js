@@ -6,6 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Initialize IPs horizontal bar chart
     initIpsChart();
+    
+    // Initialize attack timeline dual line chart
+    initTimelineChart();
 });
 
 function initCounters() {
@@ -175,5 +178,160 @@ function initIpsChart() {
 
     observer.observe(canvas);
 }
+
+function initTimelineChart() {
+    const canvas = document.getElementById('timelineChart');
+    if (!canvas) return;
+
+    const timelineData = {
+        months: [
+            'Jun 24', 'Jul 24', 'Aug 24', 'Sep 24', 'Oct 24', 'Nov 24', 'Dec 24',
+            'Jan 25', 'Feb 25', 'Mar 25', 'Apr 25', 'May 25', 'Jun 25', 'Jul 25',
+            'Aug 25', 'Sep 25', 'Oct 25', 'Nov 25', 'Dec 25', 'Jan 26', 'Feb 26',
+            'Mar 26', 'Apr 26', 'May 26', 'Jun 26'
+        ],
+        crashes: [
+            104695, 121333, 124821, 87679, 70977, 139923, 87108, 220140, 13565,
+            98880, 125419, 115363, 80172, 134391, 71970, 150872, 140992, 116299,
+            143537, 72428, 109980, 114180, 99541, 116598, 26145
+        ],
+        lags: [
+            213013, 250616, 258984, 185067, 144524, 284543, 178017, 446746, 31573,
+            206692, 258045, 238438, 169320, 279745, 147409, 306775, 287526, 238742,
+            296567, 153894, 225026, 236095, 206709, 239652, 55183
+        ]
+    };
+
+    const createChart = () => {
+        new Chart(canvas, {
+            type: 'line',
+            data: {
+                labels: timelineData.months,
+                datasets: [
+                    {
+                        label: 'System Lags (>5000ms)',
+                        data: timelineData.lags,
+                        borderColor: '#ffcc00',
+                        backgroundColor: 'rgba(255, 204, 0, 0.05)',
+                        borderWidth: 2,
+                        tension: 0.35,
+                        pointBackgroundColor: '#ffcc00',
+                        pointBorderColor: '#030303',
+                        pointHoverBackgroundColor: '#ffffff',
+                        pointHoverBorderColor: '#ffcc00',
+                        pointRadius: 3,
+                        pointHoverRadius: 6,
+                        fill: false
+                    },
+                    {
+                        label: 'System Crashes (HTTP 500)',
+                        data: timelineData.crashes,
+                        borderColor: '#ff3e3e',
+                        backgroundColor: 'rgba(255, 62, 62, 0.15)',
+                        borderWidth: 2,
+                        tension: 0.35,
+                        pointBackgroundColor: '#ff3e3e',
+                        pointBorderColor: '#030303',
+                        pointHoverBackgroundColor: '#ffffff',
+                        pointHoverBorderColor: '#ff3e3e',
+                        pointRadius: 3,
+                        pointHoverRadius: 6,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 2500,
+                    easing: 'easeOutSine'
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            color: '#e0e0e0',
+                            font: {
+                                family: 'Outfit',
+                                size: 12,
+                                weight: '600'
+                            },
+                            boxWidth: 12,
+                            padding: 20
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(5, 5, 5, 0.95)',
+                        titleFont: {
+                            family: 'Outfit',
+                            size: 13,
+                            weight: 'bold'
+                        },
+                        bodyFont: {
+                            family: 'Outfit',
+                            size: 12
+                        },
+                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        borderWidth: 1,
+                        padding: 12,
+                        usePointStyle: true,
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.dataset.label || '';
+                                return ` ${label}: ${context.raw.toLocaleString()} events`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.03)',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: '#909090',
+                            font: {
+                                family: 'JetBrains Mono',
+                                size: 9
+                            }
+                        }
+                    },
+                    y: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.03)',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: '#909090',
+                            font: {
+                                family: 'JetBrains Mono',
+                                size: 10
+                            },
+                            callback: function(value) {
+                                return (value / 1000) + 'k';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    };
+
+    // Trigger timeline chart render when visible (Scroll Reveal)
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                createChart();
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    observer.observe(canvas);
+}
+
 
 
