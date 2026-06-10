@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Initialize attack timeline dual line chart
     initTimelineChart();
+    
+    // Initialize forensic terminal typing simulation
+    initTerminalSimulation();
 });
 
 function initCounters() {
@@ -332,6 +335,108 @@ function initTimelineChart() {
 
     observer.observe(canvas);
 }
+
+function initTerminalSimulation() {
+    const consoleEl = document.getElementById('terminal-console');
+    if (!consoleEl) return;
+
+    // Set initial prompt placeholder
+    consoleEl.innerHTML = '<span class="terminal-prompt">hacker@nexus-forensics:~$ </span><span class="cursor"></span>';
+
+    let hasStarted = false;
+
+    const startForensics = async () => {
+        if (hasStarted) return;
+        hasStarted = true;
+
+        consoleEl.innerHTML = '';
+        
+        // Helper to append elements
+        const appendLine = (html, delay = 0) => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const line = document.createElement('div');
+                    line.innerHTML = html;
+                    consoleEl.appendChild(line);
+                    consoleEl.scrollTop = consoleEl.scrollHeight;
+                    resolve();
+                }, delay);
+            });
+        };
+
+        // Helper to simulate character-by-character typing
+        const typeCommand = (cmdText) => {
+            return new Promise((resolve) => {
+                const line = document.createElement('div');
+                line.innerHTML = '<span class="terminal-prompt">hacker@nexus-forensics:~$ </span><span class="terminal-command"></span><span class="cursor"></span>';
+                consoleEl.appendChild(line);
+                const cmdEl = line.querySelector('.terminal-command');
+                const cursorEl = line.querySelector('.cursor');
+                
+                let idx = 0;
+                const interval = setInterval(() => {
+                    cmdEl.textContent += cmdText[idx];
+                    idx++;
+                    consoleEl.scrollTop = consoleEl.scrollHeight;
+                    if (idx >= cmdText.length) {
+                        clearInterval(interval);
+                        cursorEl.remove(); // Remove blinking cursor from command line
+                        resolve();
+                    }
+                }, 35); // 35ms per character
+            });
+        };
+
+        // 1. Type command
+        await typeCommand("grep -o \"NEXUS_CART.*\" cart_web.log | awk '{print $1}' | uniq");
+        await appendLine("", 150);
+
+        // 2. Output system responses
+        await appendLine("<span class=\"terminal-output\">[STATUS] Scanning cart_web.log...</span>", 250);
+        await appendLine("<span class=\"terminal-output\">[STATUS] Parsing 21,146,398 log lines...</span>", 350);
+        await appendLine("<span class=\"terminal-output\">[STATUS] Scanning path parameters for anomalous patterns...</span>", 450);
+        await appendLine("<span class=\"terminal-output\">[FOUND] Anomalous unique parameters detected. Extracting Digital Signature segments:</span>", 350);
+        await appendLine("", 150);
+
+        // 3. Extract characters one-by-one
+        const token = "NEXUS_CARTTWOYMLDFIGPBVZ";
+        const baseTime = 1773468000000; // Mock epoch time representing early 2026
+        
+        for (let i = 0; i < token.length; i++) {
+            const char = token[i];
+            const timeOffset = i * 75; // 75ms offset per char
+            const date = new Date(baseTime + timeOffset);
+            const timeStr = date.toISOString().replace('T', ' ').substring(0, 19);
+            
+            let charHtml = `<span class="terminal-output">[${timeStr}] Extraction Index ${(i+1).toString().padStart(2, '0')}: </span><span class="terminal-highlight">${char}</span>`;
+            await appendLine(charHtml, 40); // 40ms interval between lines for rapid printing effect
+        }
+
+        await appendLine("", 250);
+        await appendLine("<span class=\"terminal-success\">[SUCCESS] Forensic Analysis Complete. Digital Signature Reconstructed.</span>", 250);
+        await appendLine("<span class=\"terminal-success\">Signature Token: </span><span class=\"terminal-highlight\">NEXUS_CARTTWOYMLDFIGPBVZ</span>", 150);
+        await appendLine("<span class=\"terminal-output\">[INFO] Decoded Hacker Nickname (Caesar Shift -22): </span><span class=\"terminal-highlight\">XASCQPHJMKTFZD</span>", 150);
+        
+        // Add final blinking prompt
+        const finalPrompt = document.createElement('div');
+        finalPrompt.innerHTML = '<span class="terminal-prompt">hacker@nexus-forensics:~$ </span><span class="cursor"></span>';
+        consoleEl.appendChild(finalPrompt);
+        consoleEl.scrollTop = consoleEl.scrollHeight;
+    };
+
+    // Trigger terminal animation when visible
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                setTimeout(startForensics, 400); // 400ms delay after scrolling into view
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    observer.observe(consoleEl);
+}
+
 
 
 
