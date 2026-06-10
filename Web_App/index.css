@@ -971,6 +971,64 @@ body {
     word-break: break-all;
 }
 
+/* Threat Identification Alert Banner */
+.threat-alert-banner {
+    background: rgba(255, 62, 62, 0.07);
+    border: 1px solid rgba(255, 62, 62, 0.35);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 0 15px rgba(255, 62, 62, 0.05);
+    animation: alertBorderGlow 3s infinite alternate ease-in-out;
+}
+
+@keyframes alertBorderGlow {
+    from { border-color: rgba(255, 62, 62, 0.25); box-shadow: 0 0 10px rgba(255, 62, 62, 0.03); }
+    to { border-color: rgba(255, 62, 62, 0.5); box-shadow: 0 0 20px rgba(255, 62, 62, 0.12); }
+}
+
+.alert-pulse-circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent-red);
+    box-shadow: 0 0 8px var(--accent-red);
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.alert-banner-icon {
+    font-size: 1.25rem;
+    color: var(--accent-red);
+    text-shadow: 0 0 10px var(--accent-red-glow);
+}
+
+.alert-banner-text {
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #e0e0ea;
+    text-transform: uppercase;
+}
+
+.highlight-goemon {
+    font-family: var(--font-mono);
+    color: var(--accent-yellow);
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-shadow: 0 0 10px var(--accent-yellow-glow);
+    padding: 0 0.25rem;
+    letter-spacing: 0.02em;
+    animation: goemonBlink 2s infinite ease-in-out;
+}
+
+@keyframes goemonBlink {
+    0%, 100% { opacity: 0.85; text-shadow: 0 0 8px rgba(255, 204, 0, 0.3); }
+    50% { opacity: 1; text-shadow: 0 0 18px rgba(255, 204, 0, 0.8), 0 0 30px rgba(255, 204, 0, 0.4); }
+}
+
+
 
 
 
