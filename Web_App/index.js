@@ -399,23 +399,24 @@ function initTerminalSimulation() {
         await appendLine("", 150);
 
         // 3. Extract characters one-by-one
-        const token = "NEXUS_CARTTWOYMLDFIGPBVZ";
+        const token = "NEXUS_CART_WAS_TO_EASY_YOUR_SYSTEM_WAS_ALREADY_FALING_APART_BEFORE_YOU_EVEN_REALIZED_IT_WAS_ME_GOEMON";
         const baseTime = 1773468000000; // Mock epoch time representing early 2026
         
         for (let i = 0; i < token.length; i++) {
             const char = token[i];
-            const timeOffset = i * 75; // 75ms offset per char
+            const timeOffset = i * 50; // 50ms offset per char
             const date = new Date(baseTime + timeOffset);
             const timeStr = date.toISOString().replace('T', ' ').substring(0, 19);
             
-            let charHtml = `<span class="terminal-output">[${timeStr}] Extraction Index ${(i+1).toString().padStart(2, '0')}: </span><span class="terminal-highlight">${char}</span>`;
-            await appendLine(charHtml, 40); // 40ms interval between lines for rapid printing effect
+            let charHtml = `<span class="terminal-output">[${timeStr}] Extraction Index ${(i+1).toString().padStart(3, '0')}: </span><span class="terminal-highlight">${char}</span>`;
+            await appendLine(charHtml, 20); // 20ms interval between lines for rapid printing effect
         }
 
         await appendLine("", 250);
         await appendLine("<span class=\"terminal-success\">[SUCCESS] Forensic Analysis Complete. Digital Signature Reconstructed.</span>", 250);
-        await appendLine("<span class=\"terminal-success\">Signature Token: </span><span class=\"terminal-highlight\">NEXUS_CARTTWOYMLDFIGPBVZ</span>", 150);
-        await appendLine("<span class=\"terminal-output\">[INFO] Decoded Hacker Nickname (Caesar Shift -22): </span><span class=\"terminal-highlight\">XASCQPHJMKTFZD</span>", 150);
+        await appendLine("<span class=\"terminal-success\">Raw Signature: </span><span class=\"terminal-highlight\">" + token + "</span>", 150);
+        await appendLine("<span class=\"terminal-success\">Decrypted Secret: </span><span class=\"terminal-highlight\">NEXUS CART WAS TO EASY YOUR SYSTEM WAS ALREADY FALING APART BEFORE YOU EVEN REALIZED IT WAS ME GOEMON</span>", 150);
+        await appendLine("<span class=\"terminal-error\">[ALERT] Threat Actor Identified: </span><span class=\"terminal-highlight\">GOEMON</span>", 150);
         
         // Add final blinking prompt
         const finalPrompt = document.createElement('div');
