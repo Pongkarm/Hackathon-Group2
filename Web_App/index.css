@@ -717,6 +717,144 @@ body {
     font-family: var(--font-mono);
 }
 
+/* Attacker & Traffic Split Grid */
+.charts-split-grid {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+    .charts-split-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.horizontal-bar-wrapper {
+    height: 520px;
+}
+
+.doughnut-wrapper {
+    height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Blue Accent Styles */
+.glow-blue {
+    background: linear-gradient(90deg, var(--accent-blue), transparent);
+}
+
+.chart-header.border-blue {
+    border-left-color: var(--accent-blue);
+}
+
+.chart-icon-accent-blue {
+    color: var(--accent-blue);
+    font-size: 1.1rem;
+    text-shadow: 0 0 10px var(--accent-blue-glow);
+}
+
+/* Peak Highlights Grid */
+.peaks-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .peaks-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.peak-card {
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.peak-card.card-critical {
+    border-left: 4px solid var(--accent-red);
+}
+.peak-card.card-critical:hover {
+    border-color: rgba(255, 62, 62, 0.3);
+    box-shadow: 0 10px 25px rgba(255, 62, 62, 0.08);
+}
+
+.peak-card.card-warning {
+    border-left: 4px solid var(--accent-yellow);
+}
+.peak-card.card-warning:hover {
+    border-color: rgba(255, 204, 0, 0.3);
+    box-shadow: 0 10px 25px rgba(255, 204, 0, 0.08);
+}
+
+.peak-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.peak-icon {
+    font-size: 1.1rem;
+}
+.card-critical .peak-icon { color: var(--accent-red); text-shadow: 0 0 8px var(--accent-red-glow); }
+.card-warning .peak-icon { color: var(--accent-yellow); text-shadow: 0 0 8px var(--accent-yellow-glow); }
+
+.peak-tag {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+}
+
+.peak-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.peak-time {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.peak-value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+.card-critical .peak-value { color: var(--accent-red); }
+.card-warning .peak-value { color: var(--accent-yellow); }
+
+.peak-unit {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.peak-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+
 
 
 

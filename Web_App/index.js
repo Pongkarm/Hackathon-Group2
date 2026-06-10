@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize IPs horizontal bar chart
     initIpsChart();
     
+    // Initialize HTTP Status Distribution doughnut chart
+    initStatusChart();
+    
     // Initialize attack timeline dual line chart
     initTimelineChart();
     
@@ -170,6 +173,105 @@ function initIpsChart() {
     };
 
     // Trigger chart loading when container is scrolled into view (Scroll Reveal)
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                createChart();
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    observer.observe(canvas);
+}
+
+function initStatusChart() {
+    const canvas = document.getElementById('statusChart');
+    if (!canvas) return;
+
+    const statusData = {
+        labels: ['HTTP 200 (Success)', 'HTTP 500 (Server Error)', 'HTTP 504 (Timeout)', 'HTTP 404 (Not Found)', 'HTTP 304 (Cached)'],
+        counts: [10608035, 2687008, 2685894, 2584078, 2581383],
+        colors: [
+            'rgba(0, 255, 102, 0.45)', // Cyber Green
+            'rgba(255, 62, 62, 0.55)',  // Cyber Red
+            'rgba(255, 204, 0, 0.55)',  // Cyber Yellow
+            'rgba(0, 210, 255, 0.45)',  // Cyber Blue
+            'rgba(144, 144, 154, 0.35)'  // Cyber Gray
+        ],
+        borders: [
+            '#00ff66',
+            '#ff3e3e',
+            '#ffcc00',
+            '#00d2ff',
+            '#90909a'
+        ]
+    };
+
+    const createChart = () => {
+        new Chart(canvas, {
+            type: 'doughnut',
+            data: {
+                labels: statusData.labels,
+                datasets: [{
+                    data: statusData.counts,
+                    backgroundColor: statusData.colors,
+                    borderColor: statusData.borders,
+                    borderWidth: 1,
+                    hoverOffset: 15
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '60%',
+                animation: {
+                    duration: 1800,
+                    easing: 'easeOutCirc'
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#e0e0e0',
+                            font: {
+                                family: 'Outfit',
+                                size: 11,
+                                weight: '600'
+                            },
+                            boxWidth: 10,
+                            padding: 15
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(5, 5, 5, 0.95)',
+                        titleFont: {
+                            family: 'Outfit',
+                            size: 13,
+                            weight: 'bold'
+                        },
+                        bodyFont: {
+                            family: 'Outfit',
+                            size: 12
+                        },
+                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        borderWidth: 1,
+                        padding: 12,
+                        callbacks: {
+                            label: function(context) {
+                                const total = 21146398;
+                                const val = context.raw;
+                                const pct = ((val / total) * 100).toFixed(2);
+                                return ` Requests: ${val.toLocaleString()} (${pct}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    };
+
+    // Trigger loading on scroll reveal
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
