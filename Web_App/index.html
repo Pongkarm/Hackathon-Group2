@@ -226,9 +226,9 @@
                 <div class="timeline-step">
                     <div class="step-marker">00</div>
                     <div class="step-content">
-                        <h3 class="step-title">Phase 0: File Discovery <span class="step-subtitle">(ตามหาไฟล์ที่ซ่อนไว้)</span></h3>
-                        <p class="step-text">ก่อนเริ่มการวิเคราะห์ ได้ทำการสแกนไฟล์ในไดเรกทอรีส่วนกลาง เพื่อค้นหาไฟล์ Log และสคริปต์หลักที่ซ่อนไว้ ทำให้พบไฟล์ <code>cart_web.log</code> ขนาด 1.4 GB</p>
-                        <pre class="code-block"><code>Get-ChildItem -Recurse -File | Select-Object -ExpandProperty FullName</code></pre>
+                        <h3 class="step-title">Phase 0: File Discovery <span class="step-subtitle">(ตามหาไฟล์จากเบาะแส)</span></h3>
+                        <p class="step-text">เริ่มต้นวิเคราะห์จากเบาะแสว่ามีคำว่า <code>hackathon#1</code> ซ่อนอยู่ภายในระบบ แต่ไม่ทราบชื่อและตำแหน่งของไฟล์ จึงรันคำสั่ง Linux บน Server เพื่อค้นหาข้อความดังกล่าวแบบ Recursive จนระบุตำแหน่งไฟล์ Log ได้สำเร็จ</p>
+                        <pre class="code-block"><code>grep -rn "hackathon#1" .</code></pre>
                     </div>
                 </div>
 
