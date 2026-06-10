@@ -207,6 +207,82 @@
             </div>
         </section>
 
+        <!-- Section: Forensic Methodology -->
+        <section class="section-container" id="methodology">
+            <div class="section-header">
+                <span class="section-tag"><i class="fa-solid fa-graduation-cap"></i> INCIDENT RESPONSE PROCEDURES</span>
+                <h2 class="section-title">INVESTIGATION METHODOLOGY</h2>
+            </div>
+            
+            <div class="methodology-timeline">
+                <!-- Step 0 -->
+                <div class="timeline-step">
+                    <div class="step-marker">00</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Phase 0: File Discovery <span class="step-subtitle">(ตามหาไฟล์ที่ซ่อนไว้)</span></h3>
+                        <p class="step-text">ก่อนเริ่มการวิเคราะห์ ได้ทำการสแกนไฟล์ในไดเรกทอรีส่วนกลาง เพื่อค้นหาไฟล์ Log และสคริปต์หลักที่ซ่อนไว้ ทำให้พบไฟล์ <code>cart_web.log</code> ขนาด 1.4 GB</p>
+                        <pre class="code-block"><code>Get-ChildItem -Recurse -File | Select-Object -ExpandProperty FullName</code></pre>
+                    </div>
+                </div>
+
+                <!-- Step 1 -->
+                <div class="timeline-step">
+                    <div class="step-marker">01</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Phase 1: Log Structure Profiling <span class="step-subtitle">(สำรวจโครงสร้างไฟล์)</span></h3>
+                        <p class="step-text">วิเคราะห์โครงสร้างคอลัมน์และลักษณะตัวกั้นเขตข้อมูล (Delimiter) ของไฟล์ Log ขนาดใหญ่ พบรูปแบบคั่นด้วยเครื่องหมาย Pipe <code>|</code> จัดแบ่งข้อมูลออกเป็น 7 ฟิลด์หลัก</p>
+                        <pre class="code-block"><code>Timestamp | IP | Method | Path | Status | ResponseTime | Extra</code></pre>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="timeline-step">
+                    <div class="step-marker">02</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Phase 2: Threat Actor Isolation <span class="step-subtitle">(หากลุ่ม IP คนร้าย)</span></h3>
+                        <p class="step-text">นำเข้าข้อมูลลงใน Pandas DataFrame เพื่อจัดกลุ่มและนับจำนวนการเรียกขอ (Request Count) ของแต่ละ IP และคัดกรอง IP ที่มียอดเรียกขอสูงผิดปกติเกิน 10,000 ครั้งจนพบตัวตนแฮกเกอร์ 19 IPs</p>
+                        <pre class="code-block"><code>ip_counts = df['IP'].value_counts()
+hacker_ips = ip_counts[ip_counts > 10000]</code></pre>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="timeline-step">
+                    <div class="step-marker">03</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Phase 3: Attack Pattern Analysis <span class="step-subtitle">(วิเคราะห์ Pattern การโจมตี)</span></h3>
+                        <p class="step-text">ประมวลผลช่วงเวลาที่ระบบตอบกลับผิดปกติ คัดแยกข้อมูลตามช่วงเวลาชั่วโมงเพื่อหากรอบเวลาที่ระบบเกิดความขัดข้องสูงสุด (Status 500) และช่วงเวลาตอบกลับหน่วงสูงสุด (Response Time > 5000ms)</p>
+                        <pre class="code-block"><code>crashes = df[df['Status'] == 500]
+lags = df[df['ResponseTime'] > 5000]</code></pre>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="timeline-step step-bonus">
+                    <div class="step-marker bonus-marker">04</div>
+                    <div class="step-content bonus-content">
+                        <h3 class="step-title font-gold">Phase 4: Payload Tracing <span class="step-subtitle font-gold">[BONUS] (หาเบาะแสจากข้อความที่คนร้ายทิ้งไว้)</span></h3>
+                        <p class="step-text">สำรวจข้อความในคอลัมน์ <code>Extra</code> เพื่อหาข้อมูลผิดปกติ และระบุตัวตนหา IP ที่ฝาก Footprint ลายเซ็น <code>hackathon#1</code> จนพบ IP หลักของคนร้าย <code>197.82.237.190</code> ที่มีการส่ง Payload ซ่อนไว้ใน URL</p>
+                        <pre class="code-block"><code>weird_paths = df[df['Path'].str.contains('lnwza|secret|hack', case=False, na=False)]</code></pre>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="timeline-step step-bonus">
+                    <div class="step-marker bonus-marker">05</div>
+                    <div class="step-content bonus-content">
+                        <h3 class="step-title font-gold">Phase 5: Reconstructing Signature <span class="step-subtitle font-gold">[BONUS] (ถอดรหัสได้ข้อความลับ)</span></h3>
+                        <p class="step-text">พัฒนาสคริปต์ดึงตัวอักษรพิมพ์ใหญ่ตัวสุดท้ายของแต่ละ URL เส้นทางปกติที่ตัด .html ทิ้ง นำมาเรียงต่อกันตามลำดับเวลา ยุบตัวหนังสือซ้ำ และแทนที่เครื่องหมายขีดล่างด้วยเว้นวรรคเพื่อเปิดเผยชื่อ <strong>GOEMON</strong></p>
+                        <pre class="code-block"><code>collapsed = []
+for char in raw_message:
+    if not collapsed or collapsed[-1] != char:
+        collapsed.append(char)
+final_message = "".join(collapsed).replace("_", " ")</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Section: Slogan -->
         <section class="slogan-section">
             <div class="slogan-wrapper">
