@@ -588,6 +588,136 @@ body {
     50% { background: var(--accent-green); }
 }
 
+/* Slogan Section */
+.slogan-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6rem 0 4rem 0;
+    text-align: center;
+}
+
+.slogan-text {
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+    text-transform: uppercase;
+}
+
+.neon-glow-red {
+    color: var(--accent-red);
+    text-shadow: 
+        0 0 5px var(--accent-red-glow),
+        0 0 10px var(--accent-red-glow),
+        0 0 20px var(--accent-red-glow);
+    animation: neonRedPulse 2.5s infinite alternate ease-in-out;
+}
+
+@keyframes neonRedPulse {
+    from {
+        text-shadow: 
+            0 0 4px rgba(255, 62, 62, 0.4),
+            0 0 12px rgba(255, 62, 62, 0.4),
+            0 0 20px rgba(255, 62, 62, 0.2);
+    }
+    to {
+        text-shadow: 
+            0 0 8px rgba(255, 62, 62, 0.8),
+            0 0 24px rgba(255, 62, 62, 0.8),
+            0 0 40px rgba(255, 62, 62, 0.5);
+    }
+}
+
+/* Footer & Credits Grid */
+.footer {
+    background: #020202;
+    border-top: 1px solid var(--card-border);
+    padding: 4rem 2rem 2rem 2rem;
+    margin-top: 4rem;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.footer-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    color: var(--text-primary);
+}
+
+.footer-icon {
+    font-size: 1.25rem;
+    color: var(--accent-red);
+}
+
+.footer-header h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.credits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.credit-card {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 6px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.credit-card:hover {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 62, 62, 0.2);
+    transform: translateY(-2px);
+}
+
+.student-id {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.student-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+/* Developer Gold Accent */
+.font-gold {
+    color: var(--accent-yellow) !important;
+    text-shadow: 0 0 10px rgba(255, 204, 0, 0.2);
+}
+
+.credit-card:has(.font-gold):hover {
+    border-color: rgba(255, 204, 0, 0.4);
+}
+
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    padding-top: 2rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+}
+
+
 
 
 
