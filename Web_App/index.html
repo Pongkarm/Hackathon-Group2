@@ -35,12 +35,58 @@
 
     <!-- Main Container -->
     <main class="main-content">
-        <!-- Sections will be built here in subsequent commits -->
-        <div class="setup-placeholder">
-            <i class="fa-solid fa-network-wired setup-icon"></i>
-            <h2>System Initialized</h2>
-            <p>Awaiting forensic data logs visualization module...</p>
-        </div>
+        <!-- Section: Executive Summary -->
+        <section class="section-container" id="summary">
+            <div class="section-header">
+                <span class="section-tag"><i class="fa-solid fa-chart-pie"></i> OVERVIEW</span>
+                <h2 class="section-title">EXECUTIVE SUMMARY</h2>
+            </div>
+            
+            <div class="summary-grid">
+                <!-- Card 1: Attacker IPs -->
+                <div class="summary-card card-red">
+                    <div class="card-glow"></div>
+                    <div class="card-header">
+                        <i class="fa-solid fa-user-secret card-icon"></i>
+                        <span class="card-label">IDENTIFIED ATTACKERS</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-value" data-target="19">0</div>
+                        <div class="card-suffix">IP Addresses</div>
+                    </div>
+                </div>
+
+                <!-- Card 2: System Status -->
+                <div class="summary-card card-yellow">
+                    <div class="card-glow"></div>
+                    <div class="card-header">
+                        <i class="fa-solid fa-triangle-exclamation card-icon"></i>
+                        <span class="card-label">SYSTEM INTEGRITY STATUS</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="status-badge-container">
+                            <span class="status-badge compromised"><i class="fa-solid fa-circle-exclamation"></i> COMPROMISED</span>
+                            <i class="fa-solid fa-arrow-right-long badge-arrow"></i>
+                            <span class="status-badge recovered"><i class="fa-solid fa-circle-check"></i> RECOVERED</span>
+                        </div>
+                        <div class="card-suffix">Status: Post-Incident Clean</div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Log Lines -->
+                <div class="summary-card card-blue">
+                    <div class="card-glow"></div>
+                    <div class="card-header">
+                        <i class="fa-solid fa-file-shield card-icon"></i>
+                        <span class="card-label">LOGS ANALYZED</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-value" data-target="21146398">0</div>
+                        <div class="card-suffix">Total Raw Log Lines</div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Custom Script -->
