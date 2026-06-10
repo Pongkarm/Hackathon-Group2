@@ -979,6 +979,34 @@ body {
     word-break: break-all;
 }
 
+.step-download-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding: 0.45rem 1rem;
+    background: rgba(0, 210, 255, 0.03);
+    border: 1px solid rgba(0, 210, 255, 0.15);
+    border-radius: 4px;
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.step-download-link:hover {
+    background: rgba(0, 210, 255, 0.08);
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 10px rgba(0, 210, 255, 0.25);
+    color: #ffffff;
+}
+
+.step-download-link i {
+    font-size: 0.8rem;
+}
+
 /* Threat Identification Alert Banner */
 .threat-alert-banner {
     background: rgba(255, 62, 62, 0.07);
