@@ -12,7 +12,7 @@ if not log_path.exists():
     )
 df = pd.read_csv(
     log_path,
-    sep=r"\s*\|\s*",
+    sep="\s*\|\s*",
     engine="python",
     header=None,
     names=["Timestamp", "IP", "Method", "Path", "Status", "ResponseTime", "Extra"],
