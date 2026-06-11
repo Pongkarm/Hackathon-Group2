@@ -228,7 +228,22 @@
                     <div class="step-content">
                         <h3 class="step-title">Phase 0: File Discovery <span class="step-subtitle">(ตามหาไฟล์จากเบาะแส)</span></h3>
                         <p class="step-text">เริ่มต้นวิเคราะห์จากเบาะแสว่ามีคำว่า <code>hackathon#1</code> ซ่อนอยู่ภายในระบบ แต่ไม่ทราบชื่อและตำแหน่งของไฟล์ จึงรันคำสั่ง Linux บน Server เพื่อค้นหาข้อความดังกล่าวแบบ Recursive จนระบุตำแหน่งไฟล์ Log ได้สำเร็จ</p>
-                        <pre class="code-block"><code>grep -rn "hackathon#1" .</code></pre>
+                        <div class="code-block-wrapper">
+                            <div class="inspect-badge"><i class="fa-solid fa-magnifying-glass"></i> Hover to Analyze</div>
+                            <pre class="code-block"><code>grep -rn "hackathon#1" .</code></pre>
+                            <div class="code-explanation">
+                                <div class="explanation-content">
+                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> Command Breakdown:</span>
+                                    <ul>
+                                        <li><strong>grep</strong>: Command-line utility for searching plain-text datasets for lines that match a pattern.</li>
+                                        <li><strong>-r</strong> (Recursive): Searches all files in the current directory and all subdirectories recursively.</li>
+                                        <li><strong>-n</strong> (Line Number): Prefixes each matching line of output with its 1-based line number.</li>
+                                        <li><strong>"hackathon#1"</strong>: The specific target string pattern we are searching for.</li>
+                                        <li><strong>.</strong>: Specifies the starting path (representing the current directory).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -238,7 +253,24 @@
                     <div class="step-content">
                         <h3 class="step-title">Phase 1: Log Structure Profiling <span class="step-subtitle">(สำรวจโครงสร้างไฟล์)</span></h3>
                         <p class="step-text">วิเคราะห์โครงสร้างคอลัมน์และลักษณะตัวกั้นเขตข้อมูล (Delimiter) ของไฟล์ Log ขนาดใหญ่ พบรูปแบบคั่นด้วยเครื่องหมาย Pipe <code>|</code> จัดแบ่งข้อมูลออกเป็น 7 ฟิลด์หลัก</p>
-                        <pre class="code-block"><code>Timestamp | IP | Method | Path | Status | ResponseTime | Extra</code></pre>
+                        <div class="code-block-wrapper">
+                            <div class="inspect-badge"><i class="fa-solid fa-magnifying-glass"></i> Hover to Analyze</div>
+                            <pre class="code-block"><code>Timestamp | IP | Method | Path | Status | ResponseTime | Extra</code></pre>
+                            <div class="code-explanation">
+                                <div class="explanation-content">
+                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> Format Profile Breakdown:</span>
+                                    <ul>
+                                        <li><strong>Timestamp</strong>: The request timestamp, crucial for chronological attack pattern correlation.</li>
+                                        <li><strong>IP</strong>: Client source IP address, used to identify and isolate hackers.</li>
+                                        <li><strong>Method</strong>: HTTP request method (e.g., GET, POST, PUT, DELETE).</li>
+                                        <li><strong>Path</strong>: Requested URL path and routing parameters.</li>
+                                        <li><strong>Status</strong>: HTTP response status code (e.g., 200, 500, 504).</li>
+                                        <li><strong>ResponseTime</strong>: Server processing time in milliseconds (identifies lag).</li>
+                                        <li><strong>Extra</strong>: Additional payload data and query strings.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -248,8 +280,22 @@
                     <div class="step-content">
                         <h3 class="step-title">Phase 2: Threat Actor Isolation <span class="step-subtitle">(หากลุ่ม IP คนร้าย)</span></h3>
                         <p class="step-text">นำเข้าข้อมูลลงใน Pandas DataFrame เพื่อจัดกลุ่มและนับจำนวนการเรียกขอ (Request Count) ของแต่ละ IP และคัดกรอง IP ที่มียอดเรียกขอสูงผิดปกติเกิน 10,000 ครั้งจนพบตัวตนแฮกเกอร์ 19 IPs</p>
-                        <pre class="code-block"><code>ip_counts = df['IP'].value_counts()
+                        <div class="code-block-wrapper">
+                            <div class="inspect-badge"><i class="fa-solid fa-magnifying-glass"></i> Hover to Analyze</div>
+                            <pre class="code-block"><code>ip_counts = df['IP'].value_counts()
 hacker_ips = ip_counts[ip_counts > 10000]</code></pre>
+                            <div class="code-explanation">
+                                <div class="explanation-content">
+                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> Python / Pandas Logic:</span>
+                                    <ul>
+                                        <li><strong>df['IP']</strong>: Accesses the client IP addresses column in the DataFrame.</li>
+                                        <li><strong>.value_counts()</strong>: Computes frequency counts for each unique IP address in descending order.</li>
+                                        <li><strong>ip_counts &gt; 10000</strong>: Creates a filter criteria targeting IPs with request counts exceeding 10,000.</li>
+                                        <li><strong>ip_counts[...]</strong>: Applies the filter to isolate threat actor IPs from legitimate traffic.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                         <a href="../The_Silent/01_who_are_they.py" class="step-download-link" download><i class="fa-solid fa-download"></i> Download 01_who_are_they.py</a>
                     </div>
                 </div>
@@ -260,8 +306,21 @@ hacker_ips = ip_counts[ip_counts > 10000]</code></pre>
                     <div class="step-content">
                         <h3 class="step-title">Phase 3: Attack Pattern Analysis <span class="step-subtitle">(วิเคราะห์ Pattern การโจมตี)</span></h3>
                         <p class="step-text">ประมวลผลช่วงเวลาที่ระบบตอบกลับผิดปกติ คัดแยกข้อมูลตามช่วงเวลาชั่วโมงเพื่อหากรอบเวลาที่ระบบเกิดความขัดข้องสูงสุด (Status 500) และช่วงเวลาตอบกลับหน่วงสูงสุด (Response Time > 5000ms)</p>
-                        <pre class="code-block"><code>crashes = df[df['Status'] == 500]
+                        <div class="code-block-wrapper">
+                            <div class="inspect-badge"><i class="fa-solid fa-magnifying-glass"></i> Hover to Analyze</div>
+                            <pre class="code-block"><code>crashes = df[df['Status'] == 500]
 lags = df[df['ResponseTime'] > 5000]</code></pre>
+                            <div class="code-explanation">
+                                <div class="explanation-content">
+                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> Python / Pandas Logic:</span>
+                                    <ul>
+                                        <li><strong>df['Status'] == 500</strong>: Creates a condition matching server-side internal errors (HTTP 500).</li>
+                                        <li><strong>df['ResponseTime'] &gt; 5000</strong>: Matches response latencies longer than 5 seconds.</li>
+                                        <li><strong>df[...]</strong>: Filters the main DataFrame to analyze periods of intense system failures and bottlenecks.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                         <a href="../The_Silent/02_analyze_details.py" class="step-download-link" download><i class="fa-solid fa-download"></i> Download 02_analyze_details.py</a>
                     </div>
                 </div>
@@ -271,8 +330,23 @@ lags = df[df['ResponseTime'] > 5000]</code></pre>
                     <div class="step-marker bonus-marker">04</div>
                     <div class="step-content bonus-content">
                         <h3 class="step-title font-gold">Phase 4: Payload Tracing <span class="step-subtitle font-gold">[BONUS] (หาเบาะแสจากข้อความที่คนร้ายทิ้งไว้)</span></h3>
-                        <p class="step-text">สำรวจข้อความในคอลัมน์ <code>Extra</code> เพื่อหาข้อมูลผิดปกติ และระบุตัวตนหา IP ที่ฝาก Footprint ลายเซ็น <code>hackathon#1</code> จนพบ IP หลักของคนร้าย <code>197.82.237.190</code> ที่มีการส่ง Payload ซ่อนไว้ใน URL</p>
-                        <pre class="code-block"><code>weird_paths = df[df['Path'].str.contains('lnwza|secret|hack', case=False, na=False)]</code></pre>
+                        <p class="step-text">สำรวจข้อความในคอลัมน์ <code>Extra</code> เพื่อหาข้อมูลผิดปกติ และระบุตัวตนหา IP ที่ฝาก Footprint ลายเซ็น <code>hackathon#1</code> จนพบ IP หลัก of คนร้าย <code>197.82.237.190</code> ที่มีการส่ง Payload ซ่อนไว้ใน URL</p>
+                        <div class="code-block-wrapper">
+                            <div class="inspect-badge"><i class="fa-solid fa-magnifying-glass"></i> Hover to Analyze</div>
+                            <pre class="code-block"><code>weird_paths = df[df['Path'].str.contains('lnwza|secret|hack', case=False, na=False)]</code></pre>
+                            <div class="code-explanation">
+                                <div class="explanation-content">
+                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> Python / Pandas Logic:</span>
+                                    <ul>
+                                        <li><strong>df['Path']</strong>: Focuses on the requested URL path column.</li>
+                                        <li><strong>.str.contains(...)</strong>: Tests if a pattern or regex matches within each string element.</li>
+                                        <li><strong>'lnwza|secret|hack'</strong>: Regex pattern searching for any of these signature substrings.</li>
+                                        <li><strong>case=False</strong>: Conducts a case-insensitive search.</li>
+                                        <li><strong>na=False</strong>: Fills missing or null entries with False to prevent runtime exceptions.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -282,11 +356,26 @@ lags = df[df['ResponseTime'] > 5000]</code></pre>
                     <div class="step-content bonus-content">
                         <h3 class="step-title font-gold">Phase 5: Reconstructing Signature <span class="step-subtitle font-gold">[BONUS] (ถอดรหัสได้ข้อความลับ)</span></h3>
                         <p class="step-text">พัฒนาสคริปต์ดึงตัวอักษรพิมพ์ใหญ่ตัวสุดท้ายของแต่ละ URL เส้นทางปกติที่ตัด .html ทิ้ง นำมาเรียงต่อกันตามลำดับเวลา ยุบตัวหนังสือซ้ำ และแทนที่เครื่องหมายขีดล่างด้วยเว้นวรรคเพื่อเปิดเผยชื่อ <strong>GOEMON</strong></p>
-                        <pre class="code-block"><code>collapsed = []
+                        <div class="code-block-wrapper">
+                            <div class="inspect-badge"><i class="fa-solid fa-magnifying-glass"></i> Hover to Analyze</div>
+                            <pre class="code-block"><code>collapsed = []
 for char in raw_message:
     if not collapsed or collapsed[-1] != char:
         collapsed.append(char)
 final_message = "".join(collapsed).replace("_", " ")</code></pre>
+                            <div class="code-explanation">
+                                <div class="explanation-content">
+                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> Python / De-duplication Logic:</span>
+                                    <ul>
+                                        <li><strong>collapsed = []</strong>: Initializes an empty array for unique characters.</li>
+                                        <li><strong>collapsed[-1] != char</strong>: Compares current character with the previously stored character.</li>
+                                        <li><strong>collapsed.append(char)</strong>: Stores the character only if it is not a duplicate of the last element.</li>
+                                        <li><strong>"".join(collapsed)</strong>: Recombines the characters back into a continuous string.</li>
+                                        <li><strong>.replace("_", " ")</strong>: Substitutes underscores with spaces to format the final signature payload.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                         <a href="../The_Silent/03_hidden_bonus.py" class="step-download-link" download><i class="fa-solid fa-download"></i> Download 03_hidden_bonus.py</a>
                     </div>
                 </div>
