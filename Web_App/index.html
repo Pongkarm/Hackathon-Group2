@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS CART: INCIDENT RESPONSE</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="fade-in">
+    <!-- Neon grid background overlay -->
+    <div class="grid-overlay"></div>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fa-solid fa-shield-halved logo-icon"></i>
+                <span class="logo-text">NEXUS CART: <span class="accent-red">INCIDENT RESPONSE</span></span>
+            </div>
+            <div class="nav-status">
+                <span class="status-dot pulsing"></span>
+                <span class="status-text">FORENSIC SYSTEM ONLINE</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-content">
+        <!-- Threat Identification Alert Banner -->
+        <div class="threat-alert-banner">
+            <div class="alert-pulse-circle"></div>
+            <i class="fa-solid fa-triangle-exclamation alert-banner-icon"></i>
+            <span class="alert-banner-text">FORENSIC REPORT &mdash; PRIMARY THREAT ACTOR IDENTIFIED: <span class="highlight-goemon">GOEMON</span></span>
+        </div>
+
+        <!-- Section: Executive Summary -->
+        <section class="section-container" id="summary">
+            <div class="section-header">
+                <span class="section-tag"><i class="fa-solid fa-chart-pie"></i> OVERVIEW</span>
+                <h2 class="section-title">EXECUTIVE SUMMARY</h2>
+            </div>
+            
+            <div class="summary-grid">
+                <!-- Card 1: Attacker IPs -->
+                <div class="summary-card card-red">
+                    <div class="card-glow"></div>
+                    <div class="card-header">
+                        <i class="fa-solid fa-user-secret card-icon"></i>
+                        <span class="card-label">IDENTIFIED ATTACKERS</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-value" data-target="19">0</div>
+                        <div class="card-suffix">IP Addresses</div>
+                    </div>
+                </div>
+
+                <!-- Card 2: System Status -->
+                <div class="summary-card card-yellow">
+                    <div class="card-glow"></div>
+                    <div class="card-header">
+                        <i class="fa-solid fa-triangle-exclamation card-icon"></i>
+                        <span class="card-label">SYSTEM INTEGRITY STATUS</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="status-badge-container">
+                            <span class="status-badge compromised"><i class="fa-solid fa-circle-exclamation"></i> COMPROMISED</span>
+                            <i class="fa-solid fa-arrow-right-long badge-arrow"></i>
+                            <span class="status-badge recovered"><i class="fa-solid fa-circle-check"></i> RECOVERED</span>
+                        </div>
+                        <div class="card-suffix">Status: Post-Incident Clean</div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Log Lines -->
+                <div class="summary-card card-blue">
+                    <div class="card-glow"></div>
+                    <div class="card-header">
+                        <i class="fa-solid fa-file-shield card-icon"></i>
+                        <span class="card-label">LOGS ANALYZED</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-value" data-target="21146398">0</div>
+                        <div class="card-suffix">Total Raw Log Lines</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Who Are They -->
+        <section class="section-container" id="who-are-they">
+            <div class="section-header">
+                <span class="section-tag"><i class="fa-solid fa-user-secret"></i> ATTACKERS & TRAFFIC IDENTIFICATION</span>
+                <h2 class="section-title">WHO ARE THEY & WHAT WAS THE TRAFFIC?</h2>
+            </div>
+            
+            <div class="charts-split-grid">
+                <!-- Card 1: Top 19 Threat Actor IP Addresses -->
+                <div class="chart-card">
+                    <div class="card-glow"></div>
+                    <div class="chart-header">
+                        <div class="chart-title-wrapper">
+                            <i class="fa-solid fa-server chart-icon-accent"></i>
+                            <span class="chart-title">Top 19 Threat Actor IP Addresses</span>
+                        </div>
+                        <span class="chart-subtitle">By request volume exceeding 10,000 requests</span>
+                    </div>
+                    <div class="chart-body-wrapper horizontal-bar-wrapper">
+                        <canvas id="ipsChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Card 2: HTTP Status Code Distribution -->
+                <div class="chart-card">
+                    <div class="card-glow glow-blue"></div>
+                    <div class="chart-header border-blue">
+                        <div class="chart-title-wrapper">
+                            <i class="fa-solid fa-chart-pie chart-icon-accent-blue"></i>
+                            <span class="chart-title">HTTP Status Code Distribution</span>
+                        </div>
+                        <span class="chart-subtitle">Proportion of all 21,146,398 log entries</span>
+                    </div>
+                    <div class="chart-body-wrapper doughnut-wrapper">
+                        <canvas id="statusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: When & How -->
+        <section class="section-container" id="when-and-how">
+            <div class="section-header">
+                <span class="section-tag"><i class="fa-solid fa-clock-rotate-left"></i> TEMPORAL IMPACT ANALYSIS</span>
+                <h2 class="section-title">WHEN & HOW?</h2>
+            </div>
+            
+            <div class="chart-card">
+                <div class="card-glow glow-yellow-red"></div>
+                <div class="chart-header border-yellow">
+                    <div class="chart-title-wrapper">
+                        <i class="fa-solid fa-chart-line chart-icon-accent-yellow"></i>
+                        <span class="chart-title">Incident Attack Timeline & System Impact</span>
+                    </div>
+                    <span class="chart-subtitle">Comparing Server Crashes (Status 500) and Response Latency Lags (>5000ms)</span>
+                </div>
+                <div class="chart-body-wrapper">
+                    <canvas id="timelineChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Peak Highlights Panel -->
+            <div class="peaks-grid">
+                <!-- Peak 1: Server Crashes -->
+                <div class="peak-card card-critical">
+                    <div class="peak-header">
+                        <i class="fa-solid fa-radiation peak-icon"></i>
+                        <span class="peak-tag">CRITICAL IMPACT PEAK</span>
+                    </div>
+                    <div class="peak-body">
+                        <div class="peak-time"><i class="fa-regular fa-clock"></i> 2026-04-28 14:00</div>
+                        <div class="peak-value">562 Crashes <span class="peak-unit">/ Hour</span></div>
+                        <p class="peak-desc">Heaviest system failure wave. High density of HTTP 500 internal errors caused by automated exploit execution targeting checkout/payment APIs.</p>
+                    </div>
+                </div>
+
+                <!-- Peak 2: Response Latency Lags -->
+                <div class="peak-card card-warning">
+                    <div class="peak-header">
+                        <i class="fa-solid fa-gauge-high peak-icon"></i>
+                        <span class="peak-tag">LATENCY SPIKE PEAK</span>
+                    </div>
+                    <div class="peak-body">
+                        <div class="peak-time"><i class="fa-regular fa-clock"></i> 2024-10-29 19:00</div>
+                        <div class="peak-value">1,053 Lags <span class="peak-unit">/ Hour</span></div>
+                        <p class="peak-desc">Extreme performance degradation wave. Threat actors executed heavy directory traversal attacks, causing severe database query bottlenecks.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Hidden Bonus (Terminal) -->
+        <section class="section-container" id="hidden-bonus">
+            <div class="section-header">
+                <span class="section-tag"><i class="fa-solid fa-terminal"></i> FORENSIC INVESTIGATION</span>
+                <h2 class="section-title">HIDDEN BONUS: DIGITAL SIGNATURE</h2>
+            </div>
+            
+            <div class="terminal-card">
+                <div class="card-glow glow-green"></div>
+                <!-- Terminal Title Bar -->
+                <div class="terminal-header-bar">
+                    <div class="terminal-buttons">
+                        <span class="t-btn close"></span>
+                        <span class="t-btn minimize"></span>
+                        <span class="t-btn zoom"></span>
+                    </div>
+                    <div class="terminal-title">bash — forensic_analyzer.sh</div>
+                    <div class="terminal-status"><i class="fa-solid fa-circle status-green"></i> connected</div>
+                </div>
+                <!-- Terminal Content -->
+                <div class="terminal-body">
+                    <div class="terminal-text" id="terminal-console">
+                        <!-- Typed content here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Forensic Methodology -->
+        <section class="section-container" id="methodology">
+            <div class="section-header">
+                <span class="section-tag"><i class="fa-solid fa-graduation-cap"></i> INCIDENT RESPONSE PROCEDURES</span>
+                <h2 class="section-title">INVESTIGATION METHODOLOGY</h2>
+            </div>
+            
+            <div class="methodology-timeline">
+                <!-- Step 0 -->
+                <div class="timeline-step">
+                    <div class="step-marker">00</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Phase 0: File Discovery <span class="step-subtitle">(ตามหาไฟล์จากเบาะแส)</span></h3>
+                        <p class="step-text">เริ่มต้นวิเคราะห์จากเบาะแสว่ามีคำว่า <code>hackathon#1</code> ซ่อนอยู่ภายในระบบ แต่ไม่ทราบชื่อและตำแหน่งของไฟล์ จึงรันคำสั่ง Linux บน Server เพื่อค้นหาข้อความดังกล่าวแบบ Recursive จนระบุตำแหน่งไฟล์ Log ได้สำเร็จ</p>
+                        <div class="code-block-wrapper">
+                            <div class="inspect-badge"><i class="fa-solid fa-magnifying-glass"></i> Hover to Analyze</div>
+                            <pre class="code-block"><code>grep -rn "hackathon#1" .</code></pre>
+                            <div class="code-explanation">
+                                <div class="explanation-content">
+                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> คำอธิบายคำสั่ง (Command Breakdown):</span>
+                                    <ul>
+                                        <li><strong>grep</strong>: คำสั่งหลักสำหรับค้นหาข้อความหรือแพทเทิร์นที่กำหนดในไฟล์</li>
+                                        <li><strong>-r</strong> (Recursive): ค้นหาภายในไฟล์ของโฟลเดอร์ปัจจุบันรวมถึงโฟลเดอร์ย่อยทั้งหมด</li>
+                                        <li><strong>-n</strong> (Line Number): แสดงเลขบรรทัดในไฟล์ต้นทางที่ตรวจพบข้อความตรงกัน</li>
+                                        <li><strong>"hackathon#1"</strong>: ข้อความเป้าหมาย (String Pattern) ที่ต้องการสแกนหา</li>
+                                        <li><strong>.</strong>: ระบุโฟลเดอร์ปัจจุบัน (.) ให้เป็นจุดเริ่มต้นการค้นหา</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 1 -->
+                <div class="timeline-step">
+                    <div class="step-marker">01</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Phase 1: Log Structure Profiling <span class="step-subtitle">(สำรวจโครงสร้างไฟล์)</span></h3>
+                        <p class="step-text">วิเคราะห์โครงสร้างคอลัมน์และลักษณะตัวกั้นเขตข้อมูล (Delimiter) ของไฟล์ Log ขนาดใหญ่ พบรูปแบบคั่นด้วยเครื่องหมาย Pipe <code>|</code> จัดแบ่งข้อมูลออกเป็น 7 ฟิลด์หลัก</p>
+                        <div class="code-block-wrapper">
+                            <div class="inspect-badge"><i class="fa-solid fa-magnifying-glass"></i> Hover to Analyze</div>
+                            <pre class="code-block"><code>Timestamp | IP | Method | Path | Status | ResponseTime | Extra</code></pre>
+                            <div class="code-explanation">
+                                <div class="explanation-content">
+                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> โครงสร้างฟิลด์ข้อมูล (Field Breakdown):</span>
+                                    <ul>
+                                        <li><strong>Timestamp</strong>: วันและเวลาที่มีการส่งคำขอเข้ามา ใช้เรียงลำดับเวลาการโจมตี</li>
+                                        <li><strong>IP</strong>: ที่อยู่ IP ของเครื่องต้นทาง ช่วยคัดแยกและวิเคราะห์พฤติกรรมผู้บุกรุก</li>
+                                        <li><strong>Method</strong>: HTTP request method ที่ส่งเข้ามา (เช่น GET, POST, PUT, DELETE)</li>
+                                        <li><strong>Path</strong>: เส้นทาง URL หรือ Endpoint ปลายทางที่ถูกเรียกใช้งาน</li>
+                                        <li><strong>Status</strong>: รหัสตอบกลับ HTTP (เช่น 200 โหลดสำเร็จ, 500 ระบบล่ม, 504 ไทม์เอาต์)</li>
+                                        <li><strong>ResponseTime</strong>: เวลาที่เซิร์ฟเวอร์ใช้ประมวลผล (หน่วยมิลลิวินาที) เพื่อวิเคราะห์อาการหน่วง</li>
+                                        <li><strong>Extra</strong>: ข้อมูลเพิ่มเติมหรือ Payload ลายเซ็นที่ฝากมากับคำขอ</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="timeline-step">
+                    <div class="step-marker">02</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Phase 2: Threat Actor Isolation <span class="step-subtitle">(หากลุ่ม IP คนร้าย)</span></h3>
+                        <p class="step-text">นำเข้าข้อมูลลงใน Pandas DataFrame เพื่อจัดกลุ่มและนับจำนวนการเรียกขอ (Request Count) ของแต่ละ IP และคัดกรอง IP ที่มียอดเรียกขอสูงผิดปกติเกิน 10,000 ครั้งจนพบตัวตนแฮกเกอร์ 19 IPs</p>
+                        <div class="code-block-wrapper">
+                            <div class="inspect-badge"><i class="fa-solid fa-magnifying-glass"></i> Hover to Analyze</div>
+                            <pre class="code-block"><code>ip_counts = df['IP'].value_counts()
+hacker_ips = ip_counts[ip_counts > 10000]</code></pre>
+                            <div class="code-explanation">
+                                <div class="explanation-content">
+                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> ตรรกะโค้ด Python / Pandas:</span>
+                                    <ul>
+                                        <li><strong>df['IP']</strong>: เลือกเฉพาะคอลัมน์ IP Address จากตาราง DataFrame</li>
+                                        <li><strong>.value_counts()</strong>: คำนวณความถี่และนับยอดคำขอของแต่ละ IP เรียงตามปริมาณจากมากไปน้อย</li>
+                                        <li><strong>ip_counts &gt; 10000</strong>: สร้างเงื่อนไขกรองเอาเฉพาะ IP ที่ส่งคำขอเข้ามามากกว่า 10,000 ครั้ง</li>
+                                        <li><strong>ip_counts[...]</strong>: ดึงข้อมูล IP ตามเงื่อนไขเพื่อระบุรายชื่อ IP ของผู้บุกรุก</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="../The_Silent/01_who_are_they.py" class="step-download-link" download><i class="fa-solid fa-download"></i> Download 01_who_are_they.py</a>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="timeline-step">
+                    <div class="step-marker">03</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Phase 3: Attack Pattern Analysis <span class="step-subtitle">(วิเคราะห์ Pattern การโจมตี)</span></h3>
+                        <p class="step-text">ประมวลผลช่วงเวลาที่ระบบตอบกลับผิดปกติ คัดแยกข้อมูลตามช่วงเวลาชั่วโมงเพื่อหากรอบเวลาที่ระบบเกิดความขัดข้องสูงสุด (Status 500) และช่วงเวลาตอบกลับหน่วงสูงสุด (Response Time > 5000ms)</p>
+                        <div class="code-block-wrapper">
+                            <div class="inspect-badge"><i class="fa-solid fa-magnifying-glass"></i> Hover to Analyze</div>
+                            <pre class="code-block"><code>crashes = df[df['Status'] == 500]
+lags = df[df['ResponseTime'] > 5000]</code></pre>
+                            <div class="code-explanation">
+                                <div class="explanation-content">
+                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> ตรรกะโค้ด Python / Pandas:</span>
+                                    <ul>
+                                        <li><strong>df['Status'] == 500</strong>: สร้างเงื่อนไขดึงเฉพาะบันทึกที่มีสถานะการตอบกลับขัดข้องภายในระบบ</li>
+                                        <li><strong>df['ResponseTime'] &gt; 5000</strong>: สร้างเงื่อนไขเลือกเฉพาะบันทึกที่ตอบสนองช้ากว่า 5 วินาที</li>
+                                        <li><strong>df[...]</strong>: กรองข้อมูลตามเงื่อนไขที่กำหนดเพื่อนำไปพล็อตไทม์ไลน์และเปรียบเทียบจุดพีก</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="../The_Silent/02_analyze_details.py" class="step-download-link" download><i class="fa-solid fa-download"></i> Download 02_analyze_details.py</a>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="timeline-step step-bonus">
+                    <div class="step-marker bonus-marker">04</div>
+                    <div class="step-content bonus-content">
+                        <h3 class="step-title font-gold">Phase 4: Payload Tracing <span class="step-subtitle font-gold">[BONUS] (หาเบาะแสจากข้อความที่คนร้ายทิ้งไว้)</span></h3>
+                        <p class="step-text">สำรวจข้อความในคอลัมน์ <code>Extra</code> เพื่อหาข้อมูลผิดปกติ และระบุตัวตนหา IP ที่ฝาก Footprint ลายเซ็น <code>hackathon#1</code> จนพบ IP หลักของคนร้าย <code>197.82.237.190</code> ที่มีการส่ง Payload ซ่อนไว้ใน URL</p>
+                        <div class="code-block-wrapper">
+                            <div class="inspect-badge"><i class="fa-solid fa-magnifying-glass"></i> Hover to Analyze</div>
+                            <pre class="code-block"><code>weird_paths = df[df['Path'].str.contains('lnwza|secret|hack', case=False, na=False)]</code></pre>
+                            <div class="code-explanation">
+                                <div class="explanation-content">
+                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> ตรรกะโค้ด Python / Pandas:</span>
+                                    <ul>
+                                        <li><strong>df['Path']</strong>: เข้าถึงคอลัมน์เส้นทาง URL (Path) ที่มีการเรียกขอเข้ามา</li>
+                                        <li><strong>.str.contains(...)</strong>: ค้นหาคำสำคัญหรือคำเป้าหมายแบบ Regular Expression ภายในค่าคอลัมน์</li>
+                                        <li><strong>'lnwza|secret|hack'</strong>: ลายเซ็นต้องสงสัยที่ค้นหา (ท่อนคำว่า lnwza หรือ secret หรือ hack)</li>
+                                        <li><strong>case=False</strong>: กำหนดให้ไม่แยกแยะตัวอักษรพิมพ์เล็ก-พิมพ์ใหญ่ (Case Insensitive)</li>
+                                        <li><strong>na=False</strong>: ให้แทนที่ค่าว่าง (NaN/None) ด้วยค่าเท็จเพื่อความปลอดภัยในการค้นหา</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="timeline-step step-bonus">
+                    <div class="step-marker bonus-marker">05</div>
+                    <div class="step-content bonus-content">
+                        <h3 class="step-title font-gold">Phase 5: Reconstructing Signature <span class="step-subtitle font-gold">[BONUS] (ถอดรหัสได้ข้อความลับ)</span></h3>
+                        <p class="step-text">พัฒนาสคริปต์ดึงตัวอักษรพิมพ์ใหญ่ตัวสุดท้ายของแต่ละ URL เส้นทางปกติที่ตัด .html ทิ้ง นำมาเรียงต่อกันตามลำดับเวลา ยุบตัวหนังสือซ้ำ และแทนที่เครื่องหมายขีดล่างด้วยเว้นวรรคเพื่อเปิดเผยชื่อ <strong>GOEMON</strong></p>
+                        <div class="code-block-wrapper">
+                            <div class="inspect-badge"><i class="fa-solid fa-magnifying-glass"></i> Hover to Analyze</div>
+                            <pre class="code-block"><code>collapsed = []
+for char in raw_message:
+    if not collapsed or collapsed[-1] != char:
+        collapsed.append(char)
+final_message = "".join(collapsed).replace("_", " ")</code></pre>
+                            <div class="code-explanation">
+                                <div class="explanation-content">
+                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> ตรรกะกระบวนการถอดรหัสและลดรูปคำ:</span>
+                                    <ul>
+                                        <li><strong>collapsed = []</strong>: ประกาศอาเรย์ว่างเพื่อเก็บผลลัพธ์การตัดอักษรซ้ำ</li>
+                                        <li><strong>collapsed[-1] != char</strong>: ตรวจสอบอักษรตัวปัจจุบันว่าต่างจากตัวก่อนหน้าที่เก็บหรือไม่</li>
+                                        <li><strong>collapsed.append(char)</strong>: เก็บตัวอักษรนี้ในอาเรย์เมื่อไม่เป็นตัวอักษรที่ซ้ำซ้อนกันติดต่อกัน</li>
+                                        <li><strong>"".join(collapsed)</strong>: นำผลลัพธ์ตัวอักษรทั้งหมดมาร้อยเรียงต่อกันเป็นคำเดี่ยว</li>
+                                        <li><strong>.replace("_", " ")</strong>: แทนที่สัญลักษณ์ขีดล่าง (_) ด้วยการเว้นวรรคเพื่อให้อ่านเข้าใจง่าย</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="../The_Silent/03_hidden_bonus.py" class="step-download-link" download><i class="fa-solid fa-download"></i> Download 03_hidden_bonus.py</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Slogan -->
+        <section class="slogan-section">
+            <div class="slogan-wrapper">
+                <h1 class="slogan-text">Together, <span class="neon-glow-red">WE SECURE TOMORROW.</span></h1>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Credits -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-header">
+                <i class="fa-solid fa-users-gear footer-icon"></i>
+                <h3>NEXUS CART FORENSIC TEAM (GROUP 2)</h3>
+            </div>
+            
+            <div class="credits-grid">
+                <div class="credit-card">
+                    <span class="student-id">6710301005</span>
+                    <span class="student-name">พงศภัค เทียบพิมพ์</span>
+                </div>
+                <div class="credit-card">
+                    <span class="student-id">6710301007</span>
+                    <span class="student-name">ดรัณภพ พิทักษ์กิจไพศาล</span>
+                </div>
+                <div class="credit-card">
+                    <span class="student-id font-gold">6710301009</span>
+                    <span class="student-name font-gold">อภิสักก์ คงภักดี</span>
+                </div>
+                <div class="credit-card">
+                    <span class="student-id">6710301054</span>
+                    <span class="student-name">คชา สวัสดิพิศาล</span>
+                </div>
+                <div class="credit-card">
+                    <span class="student-id">6810301009</span>
+                    <span class="student-name">ธนันชัย ไชยแรง</span>
+                </div>
+                <div class="credit-card">
+                    <span class="student-id">6810301010</span>
+                    <span class="student-name">พิภู สรศิริ</span>
+                </div>
+                <div class="credit-card">
+                    <span class="student-id">6810301026</span>
+                    <span class="student-name">ธนพล แซ่เฉิน</span>
+                </div>
+                <div class="credit-card">
+                    <span class="student-id">6810301040</span>
+                    <span class="student-name">ศิยกสิณ น่วมบัว</span>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Chitralada Technology Institute (CDTI) • Hackathon Incident Response Task Force</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Script -->
+    <script src="index.js"></script>
+</body>
+</html>
