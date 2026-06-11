@@ -233,13 +233,13 @@
                             <pre class="code-block"><code>grep -rn "hackathon#1" .</code></pre>
                             <div class="code-explanation">
                                 <div class="explanation-content">
-                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> Command Breakdown:</span>
+                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> คำอธิบายคำสั่ง (Command Breakdown):</span>
                                     <ul>
-                                        <li><strong>grep</strong>: Command-line utility for searching plain-text datasets for lines that match a pattern.</li>
-                                        <li><strong>-r</strong> (Recursive): Searches all files in the current directory and all subdirectories recursively.</li>
-                                        <li><strong>-n</strong> (Line Number): Prefixes each matching line of output with its 1-based line number.</li>
-                                        <li><strong>"hackathon#1"</strong>: The specific target string pattern we are searching for.</li>
-                                        <li><strong>.</strong>: Specifies the starting path (representing the current directory).</li>
+                                        <li><strong>grep</strong>: คำสั่งหลักสำหรับค้นหาข้อความหรือแพทเทิร์นที่กำหนดในไฟล์</li>
+                                        <li><strong>-r</strong> (Recursive): ค้นหาภายในไฟล์ของโฟลเดอร์ปัจจุบันรวมถึงโฟลเดอร์ย่อยทั้งหมด</li>
+                                        <li><strong>-n</strong> (Line Number): แสดงเลขบรรทัดในไฟล์ต้นทางที่ตรวจพบข้อความตรงกัน</li>
+                                        <li><strong>"hackathon#1"</strong>: ข้อความเป้าหมาย (String Pattern) ที่ต้องการสแกนหา</li>
+                                        <li><strong>.</strong>: ระบุโฟลเดอร์ปัจจุบัน (.) ให้เป็นจุดเริ่มต้นการค้นหา</li>
                                     </ul>
                                 </div>
                             </div>
@@ -258,15 +258,15 @@
                             <pre class="code-block"><code>Timestamp | IP | Method | Path | Status | ResponseTime | Extra</code></pre>
                             <div class="code-explanation">
                                 <div class="explanation-content">
-                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> Format Profile Breakdown:</span>
+                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> โครงสร้างฟิลด์ข้อมูล (Field Breakdown):</span>
                                     <ul>
-                                        <li><strong>Timestamp</strong>: The request timestamp, crucial for chronological attack pattern correlation.</li>
-                                        <li><strong>IP</strong>: Client source IP address, used to identify and isolate hackers.</li>
-                                        <li><strong>Method</strong>: HTTP request method (e.g., GET, POST, PUT, DELETE).</li>
-                                        <li><strong>Path</strong>: Requested URL path and routing parameters.</li>
-                                        <li><strong>Status</strong>: HTTP response status code (e.g., 200, 500, 504).</li>
-                                        <li><strong>ResponseTime</strong>: Server processing time in milliseconds (identifies lag).</li>
-                                        <li><strong>Extra</strong>: Additional payload data and query strings.</li>
+                                        <li><strong>Timestamp</strong>: วันและเวลาที่มีการส่งคำขอเข้ามา ใช้เรียงลำดับเวลาการโจมตี</li>
+                                        <li><strong>IP</strong>: ที่อยู่ IP ของเครื่องต้นทาง ช่วยคัดแยกและวิเคราะห์พฤติกรรมผู้บุกรุก</li>
+                                        <li><strong>Method</strong>: HTTP request method ที่ส่งเข้ามา (เช่น GET, POST, PUT, DELETE)</li>
+                                        <li><strong>Path</strong>: เส้นทาง URL หรือ Endpoint ปลายทางที่ถูกเรียกใช้งาน</li>
+                                        <li><strong>Status</strong>: รหัสตอบกลับ HTTP (เช่น 200 โหลดสำเร็จ, 500 ระบบล่ม, 504 ไทม์เอาต์)</li>
+                                        <li><strong>ResponseTime</strong>: เวลาที่เซิร์ฟเวอร์ใช้ประมวลผล (หน่วยมิลลิวินาที) เพื่อวิเคราะห์อาการหน่วง</li>
+                                        <li><strong>Extra</strong>: ข้อมูลเพิ่มเติมหรือ Payload ลายเซ็นที่ฝากมากับคำขอ</li>
                                     </ul>
                                 </div>
                             </div>
@@ -286,12 +286,12 @@
 hacker_ips = ip_counts[ip_counts > 10000]</code></pre>
                             <div class="code-explanation">
                                 <div class="explanation-content">
-                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> Python / Pandas Logic:</span>
+                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> ตรรกะโค้ด Python / Pandas:</span>
                                     <ul>
-                                        <li><strong>df['IP']</strong>: Accesses the client IP addresses column in the DataFrame.</li>
-                                        <li><strong>.value_counts()</strong>: Computes frequency counts for each unique IP address in descending order.</li>
-                                        <li><strong>ip_counts &gt; 10000</strong>: Creates a filter criteria targeting IPs with request counts exceeding 10,000.</li>
-                                        <li><strong>ip_counts[...]</strong>: Applies the filter to isolate threat actor IPs from legitimate traffic.</li>
+                                        <li><strong>df['IP']</strong>: เลือกเฉพาะคอลัมน์ IP Address จากตาราง DataFrame</li>
+                                        <li><strong>.value_counts()</strong>: คำนวณความถี่และนับยอดคำขอของแต่ละ IP เรียงตามปริมาณจากมากไปน้อย</li>
+                                        <li><strong>ip_counts &gt; 10000</strong>: สร้างเงื่อนไขกรองเอาเฉพาะ IP ที่ส่งคำขอเข้ามามากกว่า 10,000 ครั้ง</li>
+                                        <li><strong>ip_counts[...]</strong>: ดึงข้อมูล IP ตามเงื่อนไขเพื่อระบุรายชื่อ IP ของผู้บุกรุก</li>
                                     </ul>
                                 </div>
                             </div>
@@ -312,11 +312,11 @@ hacker_ips = ip_counts[ip_counts > 10000]</code></pre>
 lags = df[df['ResponseTime'] > 5000]</code></pre>
                             <div class="code-explanation">
                                 <div class="explanation-content">
-                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> Python / Pandas Logic:</span>
+                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> ตรรกะโค้ด Python / Pandas:</span>
                                     <ul>
-                                        <li><strong>df['Status'] == 500</strong>: Creates a condition matching server-side internal errors (HTTP 500).</li>
-                                        <li><strong>df['ResponseTime'] &gt; 5000</strong>: Matches response latencies longer than 5 seconds.</li>
-                                        <li><strong>df[...]</strong>: Filters the main DataFrame to analyze periods of intense system failures and bottlenecks.</li>
+                                        <li><strong>df['Status'] == 500</strong>: สร้างเงื่อนไขดึงเฉพาะบันทึกที่มีสถานะการตอบกลับขัดข้องภายในระบบ</li>
+                                        <li><strong>df['ResponseTime'] &gt; 5000</strong>: สร้างเงื่อนไขเลือกเฉพาะบันทึกที่ตอบสนองช้ากว่า 5 วินาที</li>
+                                        <li><strong>df[...]</strong>: กรองข้อมูลตามเงื่อนไขที่กำหนดเพื่อนำไปพล็อตไทม์ไลน์และเปรียบเทียบจุดพีก</li>
                                     </ul>
                                 </div>
                             </div>
@@ -330,19 +330,19 @@ lags = df[df['ResponseTime'] > 5000]</code></pre>
                     <div class="step-marker bonus-marker">04</div>
                     <div class="step-content bonus-content">
                         <h3 class="step-title font-gold">Phase 4: Payload Tracing <span class="step-subtitle font-gold">[BONUS] (หาเบาะแสจากข้อความที่คนร้ายทิ้งไว้)</span></h3>
-                        <p class="step-text">สำรวจข้อความในคอลัมน์ <code>Extra</code> เพื่อหาข้อมูลผิดปกติ และระบุตัวตนหา IP ที่ฝาก Footprint ลายเซ็น <code>hackathon#1</code> จนพบ IP หลัก of คนร้าย <code>197.82.237.190</code> ที่มีการส่ง Payload ซ่อนไว้ใน URL</p>
+                        <p class="step-text">สำรวจข้อความในคอลัมน์ <code>Extra</code> เพื่อหาข้อมูลผิดปกติ และระบุตัวตนหา IP ที่ฝาก Footprint ลายเซ็น <code>hackathon#1</code> จนพบ IP หลักของคนร้าย <code>197.82.237.190</code> ที่มีการส่ง Payload ซ่อนไว้ใน URL</p>
                         <div class="code-block-wrapper">
                             <div class="inspect-badge"><i class="fa-solid fa-magnifying-glass"></i> Hover to Analyze</div>
                             <pre class="code-block"><code>weird_paths = df[df['Path'].str.contains('lnwza|secret|hack', case=False, na=False)]</code></pre>
                             <div class="code-explanation">
                                 <div class="explanation-content">
-                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> Python / Pandas Logic:</span>
+                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> ตรรกะโค้ด Python / Pandas:</span>
                                     <ul>
-                                        <li><strong>df['Path']</strong>: Focuses on the requested URL path column.</li>
-                                        <li><strong>.str.contains(...)</strong>: Tests if a pattern or regex matches within each string element.</li>
-                                        <li><strong>'lnwza|secret|hack'</strong>: Regex pattern searching for any of these signature substrings.</li>
-                                        <li><strong>case=False</strong>: Conducts a case-insensitive search.</li>
-                                        <li><strong>na=False</strong>: Fills missing or null entries with False to prevent runtime exceptions.</li>
+                                        <li><strong>df['Path']</strong>: เข้าถึงคอลัมน์เส้นทาง URL (Path) ที่มีการเรียกขอเข้ามา</li>
+                                        <li><strong>.str.contains(...)</strong>: ค้นหาคำสำคัญหรือคำเป้าหมายแบบ Regular Expression ภายในค่าคอลัมน์</li>
+                                        <li><strong>'lnwza|secret|hack'</strong>: ลายเซ็นต้องสงสัยที่ค้นหา (ท่อนคำว่า lnwza หรือ secret หรือ hack)</li>
+                                        <li><strong>case=False</strong>: กำหนดให้ไม่แยกแยะตัวอักษรพิมพ์เล็ก-พิมพ์ใหญ่ (Case Insensitive)</li>
+                                        <li><strong>na=False</strong>: ให้แทนที่ค่าว่าง (NaN/None) ด้วยค่าเท็จเพื่อความปลอดภัยในการค้นหา</li>
                                     </ul>
                                 </div>
                             </div>
@@ -365,13 +365,13 @@ for char in raw_message:
 final_message = "".join(collapsed).replace("_", " ")</code></pre>
                             <div class="code-explanation">
                                 <div class="explanation-content">
-                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> Python / De-duplication Logic:</span>
+                                    <span class="explanation-label"><i class="fa-solid fa-microchip"></i> ตรรกะกระบวนการถอดรหัสและลดรูปคำ:</span>
                                     <ul>
-                                        <li><strong>collapsed = []</strong>: Initializes an empty array for unique characters.</li>
-                                        <li><strong>collapsed[-1] != char</strong>: Compares current character with the previously stored character.</li>
-                                        <li><strong>collapsed.append(char)</strong>: Stores the character only if it is not a duplicate of the last element.</li>
-                                        <li><strong>"".join(collapsed)</strong>: Recombines the characters back into a continuous string.</li>
-                                        <li><strong>.replace("_", " ")</strong>: Substitutes underscores with spaces to format the final signature payload.</li>
+                                        <li><strong>collapsed = []</strong>: ประกาศอาเรย์ว่างเพื่อเก็บผลลัพธ์การตัดอักษรซ้ำ</li>
+                                        <li><strong>collapsed[-1] != char</strong>: ตรวจสอบอักษรตัวปัจจุบันว่าต่างจากตัวก่อนหน้าที่เก็บหรือไม่</li>
+                                        <li><strong>collapsed.append(char)</strong>: เก็บตัวอักษรนี้ในอาเรย์เมื่อไม่เป็นตัวอักษรที่ซ้ำซ้อนกันติดต่อกัน</li>
+                                        <li><strong>"".join(collapsed)</strong>: นำผลลัพธ์ตัวอักษรทั้งหมดมาร้อยเรียงต่อกันเป็นคำเดี่ยว</li>
+                                        <li><strong>.replace("_", " ")</strong>: แทนที่สัญลักษณ์ขีดล่าง (_) ด้วยการเว้นวรรคเพื่อให้อ่านเข้าใจง่าย</li>
                                     </ul>
                                 </div>
                             </div>

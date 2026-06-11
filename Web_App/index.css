@@ -1120,27 +1120,46 @@ body {
 }
 
 .code-explanation {
-    max-height: 0;
+    position: absolute;
+    top: 105%;
+    left: 50%;
+    transform: translate(-50%, -10px);
+    width: 95%;
+    max-width: 500px;
+    background: rgba(6, 6, 9, 0.98);
+    border: 1px solid rgba(0, 255, 102, 0.25);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 255, 102, 0.15);
     opacity: 0;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    background: rgba(6, 6, 9, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    border-radius: 6px;
-    margin-top: 0.5rem;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 100;
+    pointer-events: none;
     box-sizing: border-box;
 }
 
 .code-block-wrapper:hover .code-explanation {
-    max-height: 400px;
     opacity: 1;
-    border-color: rgba(0, 255, 102, 0.15);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-    padding: 1rem;
+    visibility: visible;
+    transform: translate(-50%, 0);
 }
 
 .step-bonus .code-block-wrapper:hover .code-explanation {
-    border-color: rgba(255, 204, 0, 0.15);
+    border-color: rgba(255, 204, 0, 0.25);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 204, 0, 0.15);
+}
+
+/* Tooltip Triangle Indicator pointing up */
+.code-explanation::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent rgba(6, 6, 9, 0.98) transparent;
 }
 
 .explanation-content {
